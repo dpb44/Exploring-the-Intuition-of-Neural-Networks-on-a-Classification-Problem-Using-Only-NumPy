@@ -105,6 +105,10 @@ Each sample belongs to one of **three classes**:
 - **Sepal-only features**: Results in **overlapping boundaries**, making classification harder.
 - **Both features combined**: Minimizes the **cost function more effectively** but doesn't significantly alter decision boundaries.
 
+  ![Image](https://github.com/user-attachments/assets/8cba0635-a9e4-481f-bc33-4d3db460e1ee)
+
+![Image](https://github.com/user-attachments/assets/ae4dfc0b-54d1-41f1-9c39-c326301eeede)
+
 ---
 
 ## Code Implementation
