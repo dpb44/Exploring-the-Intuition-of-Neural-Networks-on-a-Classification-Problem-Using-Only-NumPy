@@ -8,9 +8,12 @@ We apply fundamental mathematical concepts such as **softmax activation, cross-e
 
 No feature normalization was performed, allowing us to analyze the raw impact of feature magnitudes on classification performance.
 
+![Image](https://github.com/user-attachments/assets/811fd4b9-30a6-4ea3-b2cf-5f61c17caf54)
+
 ---
 
 ## Mathematical Foundations
+
 
 ### **1. Softmax Function**
 For a given input vector $z$, the softmax function outputs probabilities for each class:
@@ -147,6 +150,7 @@ plt.show()
 
 - [Iris Dataset - UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris)
 - [Softmax Regression - Stanford CS229](https://cs229.stanford.edu/)
+- [Medium Article by Srija Neogi - Exploring Multi-Class Classification using Deep Learning](https://medium.com/@srijaneogi31/exploring-multi-class-classification-using-deep-learning-cd3134290887)
 
 
 
