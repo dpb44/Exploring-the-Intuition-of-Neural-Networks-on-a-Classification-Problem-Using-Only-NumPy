@@ -57,6 +57,13 @@ Each sample belongs to one of **three classes**:
 - **Versicolor (1)**
 - **Virginica (2)**
 
+```python
+#For loading in the data from existing package
+from sklearn.datasets import load_iris
+
+#Loading the data
+iris = load_iris()
+```
 ---
 
 ## Methodology
@@ -154,5 +161,8 @@ plt.show()
 - [Softmax Regression - Stanford CS229](https://cs229.stanford.edu/)
 - [Medium Article by Srija Neogi - Exploring Multi-Class Classification using Deep Learning](https://medium.com/@srijaneogi31/exploring-multi-class-classification-using-deep-learning-cd3134290887)
 
+---
 
+## **Credits & Acknowledgments**  
+This coursework was completed under the guidance of **Ms. Tatiana Buba** (Mathematics Professor).  
 
