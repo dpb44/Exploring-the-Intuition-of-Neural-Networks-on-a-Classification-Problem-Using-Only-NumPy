@@ -8,8 +8,6 @@ We apply fundamental mathematical concepts such as **softmax activation, cross-e
 
 No feature normalization was performed, allowing us to analyze the raw impact of feature magnitudes on classification performance.
 
-![Image](https://github.com/user-attachments/assets/811fd4b9-30a6-4ea3-b2cf-5f61c17caf54)
-
 ---
 
 ## Mathematical Foundations
