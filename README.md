@@ -1,134 +1,159 @@
 # Exploring the Intuition of Neural Networks on a Classification Problem Using Only NumPy
 
 ## Overview
+This project explores the intuition behind neural networks for multiclass classification using **only NumPy**, without high-level frameworks like TensorFlow or PyTorch. The goal is to classify the three **Iris species**—Setosa, Versicolor, and Virginica—based on petal and sepal measurements.
 
-This project explores the **intuition behind neural networks** for **multiclass classification** using **only NumPy**—without high-level frameworks like TensorFlow or PyTorch. The objective is to classify the three Iris species (**Setosa, Versicolor, and Virginica**) using **petal and sepal measurements**.
-
-We apply fundamental mathematical concepts such as **softmax activation, cross-entropy loss, and gradient descent updates** to train the model. Additionally, **vectorization and broadcasting** are utilized to improve computational efficiency by avoiding explicit loops.
-
-No feature normalization was performed, allowing us to analyze the raw impact of feature magnitudes on classification performance.
-
----
-
-## Mathematical Foundations
-
-
-### **1. Softmax Function**
-For a given input vector $z$, the softmax function outputs probabilities for each class:
-
-$$
-\sigma(z_i) = \frac{e^{z_i}}{\sum_{j} e^{z_j}}
-$$
-
-where $z_i$ represents the score for class $i$.
-
-### **2. Cross-Entropy Loss**
-The loss function measures how well the predicted probabilities align with the true labels:
-
-$$
-L = -\sum_{i} y_i \log(\hat{y}_i)
-$$
-
-where $y_i$ is the actual class label (one-hot encoded) and $\hat{y}_i$ is the predicted probability for class $i$.
-
-### **3. Gradient Descent Updates**
-To minimize the loss function, we compute gradients and update parameters:
-
-$$
-W = W - \eta \frac{\partial L}{\partial W}, \quad b = b - \eta \frac{\partial L}{\partial b}
-$$
-
-where $\eta$ is the learning rate.
-
----
+### Key Features:
+- **Softmax activation** for multi-class classification.
+- **Cross-entropy loss function** for model optimization.
+- **Gradient Descent- Backpropagation** to update model parameters.
+- **Vectorization and broadcasting** for computational efficiency.
+- **Decision boundary visualization** to analyze model predictions.
 
 ## Dataset
-
-The dataset consists of **150 samples**, with four numerical features:
-
+The dataset consists of **150 samples**, each with **four numerical features**:
 - **Sepal Length**
 - **Sepal Width**
 - **Petal Length**
 - **Petal Width**
 
-Each sample belongs to one of **three classes**:
-
+Each sample belongs to one of three classes:
 - **Setosa (0)**
 - **Versicolor (1)**
 - **Virginica (2)**
 
+These features are represented as $X$ in matrix form:
+
+$$
+X \in \mathbb{R}^{m \times n_x}
+$$ 
+
+where $m = 150$ (50 samples per species) and $n_x = 4$(features per sample).
+
 ```python
-#For loading in the data from existing package
+# Load the dataset using sklearn
 from sklearn.datasets import load_iris
 
-#Loading the data
 iris = load_iris()
+X, y = iris.data, iris.target
 ```
----
 
-## Methodology
+## One-Hot Encoding
+Since we are dealing with a multi-class classification problem, we convert categorical labels into **one-hot encoded vectors**.
 
-### **1. Neural Network Implementation (Without High-Level Libraries)**
+```python
+import numpy as np
 
-- Used a **single-layer neural network** with a **softmax activation** for multiclass classification.
-- Applied **cross-entropy loss** as the cost function.
-- Implemented **gradient descent** for optimization.
-- Utilized **vectorization and broadcasting** for efficient computations.
-- No feature normalization was applied aince all measurements were in centimeters.
+m, K = y.shape[0], 3  # 3 classes
 
-### **2. Feature Importance Analysis**
+y_one_hot = np.zeros((m, K))
+y_one_hot[np.arange(m), y] = 1
+```
+This transforms each label into a vector where only the corresponding class index is set to 1.
 
-- Trained separate models using **only sepal measurements** and **only petal measurements**, and one using both.
-- Compared decision boundary formations and classification accuracy.
+## Model Architecture
+We use a **single-layer feed-forward neural network** with softmax activation.
 
-### **3. Decision Boundary Visualization**
+### 1. Softmax Function
+Since we have three distinct classes, we use the **softmax function** instead of the sigmoid function. The softmax function is given by:
 
-- Plotted **decision boundaries** using **scatter plots** of sepal and petal features.
-- Observed the effect of different learning rates and iterations on boundary formation.
-- Notably, the **petal measurements** led to **sharper and more distinct class separation**, whereas the **sepal measurements resulted in overlapping boundaries**.
+$$
+[g(\boldsymbol{t})]_k = \frac{e^{t_k}}{\sum_{j=1}^K e^{t_j}}
+$$
 
----
+where $\boldsymbol{t} = (t_k)_{k=1}^K$ represents the unnormalized class scores.
 
-## Results
+This function converts raw scores into probabilites.
 
-### **1. Accuracy Comparison:**
+
+```python
+# Compute softmax activation
+Z = np.dot(W.T, X) + b
+numerator = np.exp(Z)
+denominator = np.sum(numerator, axis=0, keepdims=True)
+y_hat = (numerator / denominator).T
+```
+
+### 2. Cross-Entropy Loss Function
+The loss function quantifies the difference between predicted and true labels:
+
+$$
+\mathcal{J}(\boldsymbol{W},\boldsymbol{b}) = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K \mathbf{y}_j^{(i)} \log(\widehat{y}^{(i)}_j)
+$$
+
+
+```python
+# Compute loss
+loss = np.sum(y_one_hot * np.log(y_hat), axis=1)
+total_cost = - (1/m) * np.sum(loss)
+```
+
+### 3. Backpropagation Gradient Descent for Optimization
+Using backpropagation, we compute gradients for weights and bias updates
+
+$$
+\nabla_{\boldsymbol{W}} \mathcal{J}(\boldsymbol{W},\boldsymbol{b}) = \frac{1}{m} (\widehat{\boldsymbol{Y}} - \mathbf{Y}) X^\top
+$$
+
+$$
+\nabla_{\boldsymbol{b}} \mathcal{J}(\boldsymbol{W},\boldsymbol{b}) = \frac{1}{m} \sum_{i=1}^{m} (\widehat{\boldsymbol{y}}^{(i)} - \mathbf{y}^{(i)})
+$$
+
+We update parameters iteratively using:
+
+$$
+\boldsymbol{W} := \boldsymbol{W} - \alpha \nabla_{\boldsymbol{W}} \mathcal{J}(\boldsymbol{W},\boldsymbol{b})
+$$
+
+$$
+\boldsymbol{b} := \boldsymbol{b} - \alpha \nabla_{\boldsymbol{b}} \mathcal{J}(\boldsymbol{W},\boldsymbol{b})
+$$
+
+```python
+# Compute gradients
+W_grad = np.dot((y_hat - y_one_hot), X) / m
+b_grad = np.sum((y_hat - y_one_hot), axis=1) / m
+```
+
+## Training the Model
+We train the model using **gradient descent** over multiple iterations.
+
+```python
+# Training loop
+costs = []
+for i in range(iters):
+    y_hat = p_model(X, W, b)
+    cost = compute_cost(y, y_hat)
+    W_grad, b_grad = compute_gradients(X, y, W, b)
+    W -= lr * W_grad
+    b -= lr * b_grad
+
+    if i % 100 == 0:
+        costs.append(cost)
+        print(f"Cost after iteration {i}: {cost:.4f}")
+```
+
+## Model Evaluation & Results
+We tested three feature sets:
 
 | Feature Set        | Accuracy |
-| ------------------ | -------- |
+|------------------|----------|
 | Petal Measurements | **96%**  |
 | Sepal Measurements | **75%**  |
 | Both Features      | **98%**  |
 
-**Key Observations:**
-- The model achieves **highest accuracy (98%)** when using both features.
-- **Petal measurements alone** performed significantly better than **sepal measurements alone**.
-- The decision boundary was significantly influenced by the number of training iterations and learning rate.
+### Observations:
+- **Petal measurements alone** perform better than **sepal measurements alone**.
+- **Using both features gives the highest accuracy (98%)**.
+- The **decision boundary** was influenced by the number of training iterations and learning rate.
 
-### **2. Decision Boundary Analysis:**
-
-- **Petal-only features**: Forms **well-defined decision regions** due to strong separability.
-- **Sepal-only features**: Results in **overlapping boundaries**, making classification harder.
-- **Both features combined**: Minimizes the **cost function more effectively** but doesn't significantly alter decision boundaries.
-
-  ![Image](https://github.com/user-attachments/assets/8cba0635-a9e4-481f-bc33-4d3db460e1ee)
-
-  ![Image](https://github.com/user-attachments/assets/ae4dfc0b-54d1-41f1-9c39-c326301eeede)
-
----
-
-## Code Implementation
-
-### **1. Train the Model**
+## Decision Boundary Visualization
+To visualize how the model classifies new data, we plot the decision boundary.
 
 ```python
-# Train Neural Network Model (Single-Layer)
-W_trained, b_trained, costs = train(X, y, lr=0.2, iters=20000, W=np.random.rand(4, 3), b=np.random.rand(3,))
-```
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 
-### **2. Plot Decision Boundaries**
-
-```python
-# Generate decision boundary
 x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
 y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
 xx, yy = np.meshgrid(np.linspace(x_min, x_max, 300),
@@ -137,23 +162,31 @@ xx, yy = np.meshgrid(np.linspace(x_min, x_max, 300),
 y_pred = p_model(np.c_[xx.ravel(), yy.ravel()], W_trained, b_trained)
 y_pred = np.argmax(y_pred, axis=1).reshape(xx.shape)
 
-# Plot
-printf.contourf(xx, yy, y_pred, alpha=0.3, cmap=ListedColormap(['lightgreen', 'pink', 'coral']))
+plt.contourf(xx, yy, y_pred, alpha=0.3, cmap=ListedColormap(['lightgreen', 'pink', 'coral']))
 plt.scatter(X[:, 0], X[:, 1], c=y, edgecolors='k')
 plt.title("Decision Boundary")
 plt.show()
 ```
+  ![Image](https://github.com/user-attachments/assets/8cba0635-a9e4-481f-bc33-4d3db460e1ee)
 
----
+  ![Image](https://github.com/user-attachments/assets/ae4dfc0b-54d1-41f1-9c39-c326301eeede)
+
+### Decision Boundary Analysis:
+
+- **Petal-only features**: Forms **well-defined decision regions** due to strong separability.
+- **Sepal-only features**: The model perfoems poorly and is not able to form well-defined boundaires.
 
 ## Conclusion
+- **Petal measurements provide a stronger predictive signal than sepal measurements**.
+- **Gradient descent, softmax activation, and cross-entropy loss optimize the model effectively**.
+- **Vectorization and broadcasting improve computational efficiency**.
+- **Decision boundaries improve with more training iterations and proper hyperparameter tuning for the petal measurements**.
 
-- **Petal measurements** provide a **stronger predictive signal** than sepal measurements.
-- **Gradient descent, softmax activation, and cross-entropy loss effectively optimized the model**.
-- **Vectorization and broadcasting significantly improve computational efficiency**.
-- **Decision boundaries improve with increased iterations and learning rate tuning**.
+
+This project serves as a **minimal yet powerful demonstration** of how a neural network can be implemented from scratch, reinforcing mathematical intuition behind classification tasks.
 
 ---
+
 
 ## References
 
