@@ -60,7 +60,7 @@ We use a **single-layer feed-forward neural network** with softmax activation.
 Since we have three distinct classes, we use the **softmax function** instead of the sigmoid function. The softmax function is given by:
 
 $$
-[g(\boldsymbol{t})]_k = \frac{e^{t_k}}{\sum_{j=1}^K e^{t_j}}
+g_k(\boldsymbol{t}) = \frac{e^{t_k}}{\sum_{j=1}^{K} e^{t_j}}
 $$
 
 where $\boldsymbol{t} = (t_k)_{k=1}^K$ represents the unnormalized class scores.
@@ -203,5 +203,5 @@ This project serves as a **minimal yet powerful demonstration** of how a neural 
 ---
 
 ## **Credits & Acknowledgments**  
-This coursework was completed under the guidance of **Ms. Tatiana Buba** (Mathematics Professor).  
+This coursework was completed under the guidance of **Ms. Tatiana Bubba** (Mathematics Professor).  
 
