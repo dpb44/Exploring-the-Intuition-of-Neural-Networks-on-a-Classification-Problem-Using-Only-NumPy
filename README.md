@@ -111,6 +111,9 @@ $$
 \boldsymbol{b} := \boldsymbol{b} - \alpha \nabla_{\boldsymbol{b}} \mathcal{J}(\boldsymbol{W},\boldsymbol{b})
 $$
 
+![Image](https://github.com/user-attachments/assets/b30133d2-bc34-4c81-adf4-c40d6f2c35ea)
+**Note:** This image is only to show how the training updates the parameters though back propagation. It is not representative of the single-layer feed-forward neural network we have built. 
+
 ```python
 # Compute gradients
 W_grad = np.dot((y_hat - y_one_hot), X) / m
@@ -195,7 +198,7 @@ This project serves as a **minimal yet powerful demonstration** of how a neural 
 - [Iris Dataset - UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris)
 - [Softmax Regression - Stanford CS229](https://cs229.stanford.edu/)
 - [Medium Article by Srija Neogi - Exploring Multi-Class Classification using Deep Learning](https://medium.com/@srijaneogi31/exploring-multi-class-classification-using-deep-learning-cd3134290887)
-
+- [Medium Article by LM Po - Backpropagation: The Backbone of Neural Network Training] (https://medium.com/@lmpo/backpropagation-the-backbone-of-neural-network-training-64946d6c3ae5)
 ---
 
 ## **Credits & Acknowledgments**  
