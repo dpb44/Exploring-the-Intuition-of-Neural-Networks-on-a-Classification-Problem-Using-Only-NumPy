@@ -1,7 +1,9 @@
 # Exploring the Intuition of Neural Networks on a Classification Problem Using Only NumPy
 
 ## Overview
-This project explores the intuition behind neural networks for multiclass classification using **only NumPy**, without high-level frameworks like TensorFlow or PyTorch. The goal is to classify the three **Iris species**—Setosa, Versicolor, and Virginica—based on petal and sepal measurements.
+This project explores the intuition behind neural networks for multiclass classification using **only NumPy**, without high-level frameworks like TensorFlow or PyTorch. The goal is to classify the three **Iris species**—Setosa, Versicolor, and Virginica—based on petal and sepal measurements. We built a single-layer neural network using softmax activation, cross-entropy loss, and gradient descent to optimize model parameters.
+
+![Image](https://github.com/user-attachments/assets/2fb3559c-e3c1-4e36-ba4c-fa77c3e3a221)
 
 ### Key Features:
 - **Softmax activation** for multi-class classification.
