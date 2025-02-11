@@ -112,7 +112,8 @@ $$
 $$
 
 ![Image](https://github.com/user-attachments/assets/b30133d2-bc34-4c81-adf4-c40d6f2c35ea)
-**Note:** This image is only to show how the training updates the parameters though back propagation. It is not representative of the single-layer feed-forward neural network we have built. 
+
+*Note: This image is only to show how the training updates the parameters though back propagation. It is not representative of the single-layer feed-forward neural network we have built.*
 
 ```python
 # Compute gradients
