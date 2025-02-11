@@ -199,7 +199,7 @@ This project serves as a **minimal yet powerful demonstration** of how a neural 
 - [Iris Dataset - UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris)
 - [Softmax Regression - Stanford CS229](https://cs229.stanford.edu/)
 - [Medium Article by Srija Neogi - Exploring Multi-Class Classification using Deep Learning](https://medium.com/@srijaneogi31/exploring-multi-class-classification-using-deep-learning-cd3134290887)
-- [Medium Article by LM Po - Backpropagation: The Backbone of Neural Network Training] (https://medium.com/@lmpo/backpropagation-the-backbone-of-neural-network-training-64946d6c3ae5)
+- [Medium Article by LM Po - Backpropagation: The Backbone of Neural Network Training (Back Propagation Image)](https://medium.com/@lmpo/backpropagation-the-backbone-of-neural-network-training-64946d6c3ae5)
 ---
 
 ## **Credits & Acknowledgments**  
